@@ -10,6 +10,7 @@ import Home from "./pages/products/Home";
 import Cart from "./pages/products/Cart";
 import Details from "./pages/products/Details";
 import { useAuthStore } from "./app/AuthStore";
+import Profile from "./pages/auth/Profile";
 
 const App = () => {
   const { user } = useAuthStore();
@@ -25,6 +26,10 @@ const App = () => {
     {
       path: "/login",
       element: user ? <Navigate to="/home" /> : <Login />,
+    },
+    {
+      path: "/profile",
+      element: <Profile />,
     },
     {
       path: "/",

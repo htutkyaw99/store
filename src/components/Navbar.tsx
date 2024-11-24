@@ -80,7 +80,9 @@ const Navbar = () => {
               <p className="justify-between">{user?.email}</p>
             </li>
             <li>
-              <a className="justify-between">Profile</a>
+              <Link to="/profile" className="justify-between">
+                Profile
+              </Link>
             </li>
             <li onClick={handleLogout}>
               <a>Logout</a>

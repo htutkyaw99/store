@@ -20,7 +20,7 @@ const Home = () => {
   const [products, setProducts] = useState<Products[]>([]);
   const [filteredProducts, setFilteredProducts] = useState<Products[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [maxPrice, setMaxPrice] = useState<number>(1000);
+  const [maxPrice, setMaxPrice] = useState<number>(100);
 
   useEffect(() => {
     async function getProducts() {
@@ -56,7 +56,7 @@ const Home = () => {
     <main>
       <div className="flex justify-between mb-3">
         <SearchBar handleSearch={handleSearchProduct} />
-        <div>
+        <div className="flex items-center gap-3">
           <label htmlFor="priceRange">Max Price: {maxPrice}</label>
           <input
             type="range"
