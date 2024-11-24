@@ -1,13 +1,18 @@
-import Navbar from "../components/Navbar"
-import { Outlet } from "react-router"
+import { useAuthStore } from "../app/AuthStore";
+import Navbar from "../components/Navbar";
+import { Navigate, Outlet } from "react-router";
 
 const Layout = () => {
-  return (
-    <>
-        <Navbar/>
-        <Outlet/>
-    </>
-  )
-}
+  const { user } = useAuthStore();
 
-export default Layout
+  return user ? (
+    <>
+      <Navbar />
+      <Outlet />
+    </>
+  ) : (
+    <Navigate to="/login" />
+  );
+};
+
+export default Layout;

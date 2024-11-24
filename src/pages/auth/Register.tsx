@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../config/axiosInstance";
+import { useAuthStore } from "../../app/AuthStore";
 
 interface Form {
   name: string;
@@ -11,6 +12,8 @@ interface Form {
 
 const Register = () => {
   const navigate = useNavigate();
+
+  const { setAuth } = useAuthStore();
 
   const [formData, setFormData] = useState<Form>({
     name: "",
@@ -40,7 +43,7 @@ const Register = () => {
     e.preventDefault();
     console.log(formData);
     try {
-      const res = await axiosInstance.post("/api/register", formData, {
+      const res = await axiosInstance.post("/register", formData, {
         headers: {
           "Content-Type": "application/json",
         },
@@ -52,6 +55,7 @@ const Register = () => {
         password: "",
         password_confirmation: "",
       });
+      setAuth(formData, res.data.token);
       navigate("/home");
     } catch (error: any) {
       console.log(error.response.data.errors);

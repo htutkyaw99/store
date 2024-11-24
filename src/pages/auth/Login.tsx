@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { axiosInstance } from "../../config/axiosInstance";
-import { useAuthStore } from "../../app/store";
+import { useAuthStore } from "../../app/AuthStore";
 
 interface Form {
   email: string;
@@ -37,7 +37,7 @@ const Login = () => {
     e.preventDefault();
     console.log(formData);
     try {
-      const res = await axiosInstance.post("/api/login", formData, {
+      const res = await axiosInstance.post("/login", formData, {
         headers: {
           "Content-Type": "application/json",
         },
