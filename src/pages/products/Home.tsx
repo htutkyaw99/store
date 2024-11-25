@@ -1,9 +1,7 @@
 import { useEffect, useState } from "react";
-import { useAuthStore } from "../../app/AuthStore";
 import ProductCard from "../../components/ProductCard";
 import { axiosInstance } from "../../config/axiosInstance";
 import SearchBar from "../../components/SearchBar";
-import Range from "../../components/Range";
 
 interface Category {
   id: number;
@@ -21,6 +19,9 @@ const Home = () => {
   const [filteredProducts, setFilteredProducts] = useState<Products[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [maxPrice, setMaxPrice] = useState<number>(100);
+  const [selectedCategory, setSelectedCategory] = useState("");
+
+  const categories = ["Action RPG", "Sports", "Battle Royale"];
 
   useEffect(() => {
     async function getProducts() {
@@ -52,11 +53,39 @@ const Home = () => {
     );
   };
 
+  const handleCategoryChange = (
+    event: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    const category = event.target.value;
+    setSelectedCategory(category);
+
+    if (category === "") {
+      setFilteredProducts(products);
+    } else {
+      const filtered = products.filter(
+        (product) => product.category.name === category
+      );
+      setFilteredProducts(filtered);
+    }
+  };
+
   return (
     <main>
-      <div className="flex justify-between mb-3">
+      <div className="flex flex-col w-full items-center md:flex-row justify-between mb-3 gap-3">
         <SearchBar handleSearch={handleSearchProduct} />
-        <div className="flex items-center gap-3">
+        <select
+          className="select select-bordered w-full max-w-xs flex-1"
+          value={selectedCategory}
+          onChange={handleCategoryChange}
+        >
+          <option value="">All products</option>
+          {categories.map((category) => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+        <div className="flex flex-1 items-center gap-3">
           <label htmlFor="priceRange">Max Price: {maxPrice}</label>
           <input
             type="range"

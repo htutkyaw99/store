@@ -1,8 +1,6 @@
-import React from "react";
-
 const SearchBar = ({ handleSearch }: any) => {
   return (
-    <div className="w-1/3">
+    <div className="md:w-1/3 w-1/2">
       <label className="input input-bordered flex items-center gap-2">
         <input
           onChange={handleSearch}

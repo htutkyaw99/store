@@ -13,7 +13,7 @@ interface Form {
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { setAuth, user } = useAuthStore();
+  const { setAuth, user, clearAuth } = useAuthStore();
 
   const [formData, setFormData] = useState<Form>({
     id: 0,
@@ -91,6 +91,22 @@ const Profile = () => {
     }
   };
 
+  const handleDelete = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    console.log(formData);
+    try {
+      await axiosInstance.delete(`/profile/delete/${formData.id}`);
+      clearAuth();
+      navigate("/register");
+    } catch (error) {
+      console.log(error);
+      clearAuth();
+      navigate("/register");
+    }
+  };
+
   return (
     <div className="flex min-h-screen justify-center items-center">
       <form action="" className="flex flex-col gap-3">
@@ -150,6 +166,10 @@ const Profile = () => {
 
         <button onClick={handleUpdate} className="btn btn-primary">
           Update account
+        </button>
+
+        <button onClick={handleDelete} className="btn btn-error">
+          Delete account
         </button>
       </form>
     </div>
